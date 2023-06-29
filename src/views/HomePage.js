@@ -9,7 +9,7 @@ const HomePage = () => {
         <Flex 
         direction="column"
         flex="1"
-        bgImage="url('/assets/background1.jpg')"
+        bgImage="url('/assets/background2.jpg')"
         bgPosition="top"
         bgRepeat="no-repeat"
         bgSize={["100% auto", "cover", "cover"]}

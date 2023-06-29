@@ -70,31 +70,31 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
         <Modal isOpen={showRegisterModal} onClose={closeModal}>
           <ModalOverlay />
           <ModalContent>
-          <ModalHeader></ModalHeader>
-          <ModalCloseButton />
-          <ModalBody>
-            <FormControl id="email" isInvalid={errors.email}>
-              <FormLabel>Email address</FormLabel>
-              <Input type="email" {...register("email", { required: "Email is required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" } })} />
-              <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
-            </FormControl>
-            <FormControl id="password" mt={4} isInvalid={errors.password}>
-              <FormLabel>Password</FormLabel>
-              <Input type="password" {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters long" } })} />
-              <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
-            </FormControl>
-            <FormControl id="confirmPassword" mt={4} isInvalid={errors.confirmPassword}>
-              <FormLabel>Confirm Password</FormLabel>
-              <Input type="password" {...register("confirmPassword", { required: "Confirm Password is required", validate: (value) => value === watch("password") || "Passwords do not match" })} />
-              <FormErrorMessage>{errors.confirmPassword && errors.confirmPassword.message}</FormErrorMessage>
-            </FormControl>
-          </ModalBody>
-          <ModalFooter>
-            <Button bgColor='#272727' color='white' mr={3} onClick={handleSubmit(onSignUp)}>
-              Sign Up
-            </Button>
-            <Button variant="ghost" onClick={closeModal}>Cancel</Button>
-          </ModalFooter>
+            <ModalHeader></ModalHeader>
+            <ModalCloseButton />
+            <ModalBody>
+              <FormControl id="email" isInvalid={errors.email}>
+                <FormLabel>Email address</FormLabel>
+                <Input type="email" {...register("email", { required: "Email is required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" } })} />
+                <FormErrorMessage>{errors.email && errors.email.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl id="password" mt={4} isInvalid={errors.password}>
+                <FormLabel>Password</FormLabel>
+                <Input type="password" {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters long" } })} />
+                <FormErrorMessage>{errors.password && errors.password.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl id="confirmPassword" mt={4} isInvalid={errors.confirmPassword}>
+                <FormLabel>Confirm Password</FormLabel>
+                <Input type="password" {...register("confirmPassword", { required: "Confirm Password is required", validate: (value) => value === watch("password") || "Passwords do not match" })} />
+                <FormErrorMessage>{errors.confirmPassword && errors.confirmPassword.message}</FormErrorMessage>
+              </FormControl>
+            </ModalBody>
+            <ModalFooter>
+              <Button bgColor='#272727' color='white' mr={3} onClick={handleSubmit(onSignUp)}>
+                Sign Up
+              </Button>
+              <Button variant="ghost" onClick={closeModal}>Cancel</Button>
+            </ModalFooter>
           </ModalContent>
         </Modal>
       )}
