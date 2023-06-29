@@ -3,7 +3,7 @@ import { Box, Image, Flex, Button } from "@chakra-ui/react";
 import { AiOutlineUser } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 
-const Header = () => {
+const Header = ({ onOpen }) => {
   return (
     <Flex >
         <Box flex='1'></Box>
@@ -17,7 +17,7 @@ const Header = () => {
         {/* <Spacer /> */}
         <Box flex='1'>
             <Flex justify='flex-end'>
-                <Button pr={["10", "15", "20"]} pt={["5", "5", "9"]} variant='link' leftIcon={<AiOutlineUser />} colorScheme="darkgray">Sign In</Button>
+                <Button onClick={onOpen} pr={["10", "15", "20"]} pt={["5", "5", "9"]} variant='link' leftIcon={<AiOutlineUser />} colorScheme="darkgray">Log In</Button>
             </Flex>
         </Box>   
     </Flex>
