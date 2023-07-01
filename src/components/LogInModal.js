@@ -1,8 +1,12 @@
 import { useState } from "react";
 import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, FormErrorMessage } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
+
+import { callApi } from "./API";
 
 const LogInModal = ({ isOpen, onClose, onOpen }) => {
+  const navigate = useNavigate();
   const [showRegisterModal, setShowRegisterModal] = useState(false);
   const { handleSubmit, register, formState: { errors }, watch, reset } = useForm();
   const [email, setEmail] = useState("");
@@ -14,18 +18,47 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     setShowRegisterModal(true);
   };
 
-  const onLogin = (data) => {
+  const onLogin = async (data) => {
     setEmail(data.email);
     setPassword(data.password);
     // TODO: Send the login data to the backend
+    // try {
+    //   const response = await callApi("url", "PUT", data);
+
+    //     reset();
+    //   if (response.success) {
+    //     onClose();
+    //     navigate("/home"); 
+    //   } else {
+    //     // Handle login error
+    //     console.error("Login failed");
+    //   }
+    // } catch (error) {
+    //   console.error("Error during login", error);
+    // }
     reset(); 
     onClose();
+    navigate("/home"); 
   };
 
-  const onSignUp = (data) => {
+  const onSignUp = async (data) => {
     setEmail(data.email);
     setPassword(data.password);
     // TODO: Send the sign up data to the backend
+    // try {
+    //   const response = await callApi("url", "POST", data);
+  
+    //   reset(); 
+    //   if (response.success) {
+    //     setShowRegisterModal(false);
+    //     onOpen();
+    //   } else {
+    //     // Handle register error
+    //     console.error("Register failed");
+    //   }
+    // } catch (error) {
+    //   console.error("Error during register", error);
+    // }
     setShowRegisterModal(false);
     reset(); 
     onOpen();

@@ -1,9 +1,10 @@
 import React from "react";
-
 import { Flex } from "@chakra-ui/react";
-import Footer from "./components/Footer";
-import HomePage from "./views/HomePage";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+
+import Footer from "./components/Footer";
+import WelcomePage from "./views/WelcomePage";
+import HomePage from "./views/HomePage";
 
 function App() {
   return (
@@ -11,7 +12,8 @@ function App() {
       <Router>
         <Flex flex="1">
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<WelcomePage />} />
+            <Route path="/home" element={<HomePage />} />
           </Routes>
         </Flex>
         <Footer />
