@@ -25,7 +25,7 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     // try {
     //   const response = await callApi("url", "PUT", data);
 
-    //     reset();
+    //   reset();
     //   if (response.success) {
     //     onClose();
     //     navigate("/home"); 
@@ -38,7 +38,7 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     // }
     reset(); 
     onClose();
-    navigate("/home", { state: { email: email } });
+    navigate("/home", { state: { email: data.email } });
   };
 
   const onSignUp = async (data) => {

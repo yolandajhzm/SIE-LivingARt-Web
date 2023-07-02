@@ -19,8 +19,6 @@ function ItemPage(props) {
     const location = useLocation();
     const itemId = location.pathname.split("/")[2]; // Get the id from the url
     const { email } = location.state;
-    console.log(email);
-    console.log(itemId);
     const [item, setItem] = useState(null); 
 
     //Fetch the item from backend using its id 
