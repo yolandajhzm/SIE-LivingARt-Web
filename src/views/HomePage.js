@@ -1,10 +1,14 @@
-import React from 'react';
-import { Flex, Box, Spacer, Image, Button, Grid, Text, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { useState, useEffect } from "react";
+import { Flex, Box, Spacer, Image, Button, Grid, Text, Menu, useDisclosure, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
 import { AiOutlineUser, AiOutlineUpload } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { Divider } from '@chakra-ui/react'
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
+import UploadModal from "../components/UploadModal";
+import { callApi } from "../components/API";
+
+// TODO: Pagination
 
 const dummyData = [
     {
@@ -36,6 +40,10 @@ const dummyData = [
 
 function HomePage(props) {
     const navigate = useNavigate();
+    const location = useLocation();
+    const { email } = location.state;
+    const [allData, setAllData] = useState([]); 
+    const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleSignout = async () => {
         // TODO: Send the sign out data to the backend
@@ -52,7 +60,21 @@ function HomePage(props) {
         //   console.error("Error during sign out", error);
         // }
         navigate("/"); 
-      };
+    };
+
+    // const fetchFurniture = async () => {
+    //     try {
+    //       const response = await callApi("url", email);
+    //       setAllData(response.data);
+    //     } catch (error) {
+    //       console.error(error);
+    //     }
+    // };
+    
+    // useEffect(() => {
+    //   fetchFurniture(); 
+    // }, []);
+
     return (
         <Flex 
         direction="column"
@@ -78,7 +100,8 @@ function HomePage(props) {
                             <MenuItem onClick={handleSignout}>Sign Out</MenuItem>
                         </MenuList>
                     </Menu>
-                    <Button  pl='5' pt='3' variant='link' leftIcon={<AiOutlineUpload />} colorScheme="darkgray">Upload</Button>
+                    <UploadModal isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
+                    <Button  pl='5' pt='3' variant='link' onClick={onOpen} leftIcon={<AiOutlineUpload />} colorScheme="darkgray">Upload</Button>
                 </Flex>
             </Flex>
             <Divider />
