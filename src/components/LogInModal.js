@@ -38,7 +38,7 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     // }
     reset(); 
     onClose();
-    navigate("/home", { state: { email: email } }); 
+    navigate("/home", { state: { email: email } });
   };
 
   const onSignUp = async (data) => {

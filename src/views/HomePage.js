@@ -15,26 +15,31 @@ const dummyData = [
         id: 1,
         name: "Chair1",
         imageSrc: "../assets/chair.png",
+        description: "This is Chair1.",
     },
     {
         id: 2,
         name: "Table1",
         imageSrc: "../assets/table.png",
+        description: "This is Table1.",
     },
     {
         id: 3,
         name: "Chair2",
         imageSrc: "../assets/chair.png",
+        description: "This is Chair2.",
     },
     {
         id: 4,
         name: "Table2",
         imageSrc: "../assets/table.png",
+        description: "This is Table2.",
     },
     {
         id: 5,
         name: "Sofa1",
         imageSrc: "../assets/sofa.png",
+        description: "This is Sofa1.",
     },
   ];
 
@@ -48,7 +53,7 @@ function HomePage(props) {
     const handleSignout = async () => {
         // TODO: Send the sign out data to the backend
         // try {
-        //   const response = await callApi("url", "PUT", { });
+        //   const response = await callApi("url", "PUT", email);
 
         //   if (response.success) {
         //     navigate("/"); 
@@ -82,9 +87,7 @@ function HomePage(props) {
         >
             <Flex flex='1'>
                 <Box flex='1'>
-                    <Link to="/">
-                        <Image  pl='5' src="../assets/name.png" w={["300px", "300px", "250px"]} />
-                    </Link>
+                    <Image  pl='5' src="../assets/name.png" w={["300px", "300px", "250px"]} />
                 </Box>
                 <Spacer />
                 <Box flex='1'>
@@ -124,6 +127,7 @@ function HomePage(props) {
                     flexDirection="column"
                     alignItems="center"
                     justifyContent="center"
+                    onClick={() => navigate(`/furniture/${furniture.id}`, { state: { email: email } })}
                     >
                     <Image src={furniture.imageSrc} alt={furniture.name} height="230px" borderRadius={"10"}/>
                     <Text mt={2}  fontFamily={"Avenir"} fontWeight={"bold"}>

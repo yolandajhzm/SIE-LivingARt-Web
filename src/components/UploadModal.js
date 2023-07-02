@@ -56,8 +56,8 @@ const UploadModal = ({ isOpen, onClose, onOpen }) => {
   };
 
   const handleClose = () => {
-    setDescription(""); // Clear the description
-    onClose(); // Close the modal
+    setDescription(""); 
+    onClose(); 
   };
 
   return (

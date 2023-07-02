@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Footer from "./components/Footer";
 import WelcomePage from "./views/WelcomePage";
 import HomePage from "./views/HomePage";
+import ItemPage from "./views/ItemPage";
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Routes>
             <Route path="/" element={<WelcomePage />} />
             <Route path="/home" element={<HomePage />} />
+            <Route path="/furniture/:id" element={<ItemPage />} />
           </Routes>
         </Flex>
         <Footer />
