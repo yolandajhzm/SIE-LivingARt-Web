@@ -52,19 +52,18 @@ function HomePage(props) {
 
     const handleSignout = async () => {
         // TODO: Send the sign out data to the backend
-        // try {
-        //   const response = await callApi("url", "PUT", email);
+        try {
+          const response = await callApi("http://localhost:6000/user/logout", "PUT", email);
 
-        //   if (response.success) {
-        //     navigate("/"); 
-        //   } else {
-        //     // Handle sign out error
-        //     console.error("Sign out failed");
-        //   }
-        // } catch (error) {
-        //   console.error("Error during sign out", error);
-        // }
-        navigate("/"); 
+          if (response) {
+            navigate("/"); 
+          } else {
+            // Handle sign out error
+            console.error("Sign out failed");
+          }
+        } catch (error) {
+          console.error("Error during sign out", error);
+        }
     };
 
     // const fetchFurniture = async () => {

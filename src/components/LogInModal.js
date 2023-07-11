@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Modal, ModalOverlay, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, FormErrorMessage } from "@chakra-ui/react";
+import { Button, Modal, ModalOverlay, Select, ModalContent, ModalHeader, ModalFooter, ModalBody, ModalCloseButton, FormControl, FormLabel, Input, FormErrorMessage } from "@chakra-ui/react";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
@@ -11,6 +11,7 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
   const { handleSubmit, register, formState: { errors }, watch, reset } = useForm();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [userType, setUserType] = useState("");
 
   const openSignUp = () => {
     reset(); 
@@ -22,46 +23,47 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     setEmail(data.email);
     setPassword(data.password);
     // TODO: Send the login data to the backend
-    // try {
-    //   const response = await callApi("url", "PUT", data);
+    try {
+      const response = await callApi("http://localhost:6000/user/login", "PUT", {
+        email: data.email,
+        password: data.password,
+      });
 
-    //   reset();
-    //   if (response.success) {
-    //     onClose();
-    //     navigate("/home"); 
-    //   } else {
-    //     // Handle login error
-    //     console.error("Login failed");
-    //   }
-    // } catch (error) {
-    //   console.error("Error during login", error);
-    // }
-    reset(); 
-    onClose();
-    navigate("/home", { state: { email: data.email } });
+      reset();
+      if (response) {
+        onClose();
+        navigate("/home", { state: { email: data.email } }); 
+      } else {
+        // Handle login error
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login", error);
+    }
   };
 
   const onSignUp = async (data) => {
     setEmail(data.email);
     setPassword(data.password);
+    setUserType(data.userType);
     // TODO: Send the sign up data to the backend
-    // try {
-    //   const response = await callApi("url", "POST", data);
-  
-    //   reset(); 
-    //   if (response.success) {
-    //     setShowRegisterModal(false);
-    //     onOpen();
-    //   } else {
-    //     // Handle register error
-    //     console.error("Register failed");
-    //   }
-    // } catch (error) {
-    //   console.error("Error during register", error);
-    // }
-    setShowRegisterModal(false);
-    reset(); 
-    onOpen();
+    try {
+      const response = await callApi("http://localhost:6000/user/register", "POST", {
+        email: data.email,
+        password: data.password,
+        type: data.userType,
+      });
+
+      if (response) {
+        setShowRegisterModal(false);
+        reset(); 
+        onOpen();
+      } else {
+        alert("Sign up failed");
+      }
+    } catch (error) {
+      console.error("Error during sign up", error);
+    }
   };
 
   const closeModal = () => {
@@ -120,6 +122,13 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
                 <FormLabel>Confirm Password</FormLabel>
                 <Input type="password" {...register("confirmPassword", { required: "Confirm Password is required", validate: (value) => value === watch("password") || "Passwords do not match" })} />
                 <FormErrorMessage>{errors.confirmPassword && errors.confirmPassword.message}</FormErrorMessage>
+              </FormControl>
+              <FormControl id="userType" mt={4} onChange={(event) => setUserType(event.target.value)}>
+                <FormLabel>Are you a vendor?</FormLabel>
+                <Select {...register("userType")}>
+                  <option value="1">Yes</option>
+                  <option value="0">No</option>
+                </Select>
               </FormControl>
             </ModalBody>
             <ModalFooter>
