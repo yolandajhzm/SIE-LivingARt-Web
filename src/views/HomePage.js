@@ -15,31 +15,31 @@ const dummyData = [
     {
         id: 1,
         name: "Chair1",
-        imageSrc: "../assets/chair.png",
+        imageSource: "../assets/chair.png",
         description: "This is Chair1.",
     },
     {
         id: 2,
         name: "Table1",
-        imageSrc: "../assets/table.png",
+        imageSource: "../assets/table.png",
         description: "This is Table1.",
     },
     {
         id: 3,
         name: "Chair2",
-        imageSrc: "../assets/chair.png",
+        imageSource: "../assets/chair.png",
         description: "This is Chair2.",
     },
     {
         id: 4,
         name: "Table2",
-        imageSrc: "../assets/table.png",
+        imageSource: "../assets/table.png",
         description: "This is Table2.",
     },
     {
         id: 5,
         name: "Sofa1",
-        imageSrc: "../assets/sofa.png",
+        imageSource: "../assets/sofa.png",
         description: "This is Sofa1.",
     },
   ];
@@ -121,7 +121,7 @@ function HomePage(props) {
                 templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} // Responsive grid layout
                 gap={4}
                 >
-                {allData.map((furniture) => (
+                {dummyData.map((furniture) => (
                     <Box
                     key={furniture.id}
                     p={2}
@@ -134,7 +134,7 @@ function HomePage(props) {
                     flexDirection="column"
                     alignItems="center"
                     justifyContent="center"
-                    onClick={() => navigate(`/furniture/${furniture.id}`, { state: { userId } })}
+                    onClick={() => navigate(`/furniture/${furniture.id}`, { state: { furniture } })}
                     >
                     <Image src={furniture.imageSource} alt={furniture.name} height="230px" borderRadius={"10"}/>
                     <Text mt={2}  fontFamily={"Avenir"} fontWeight={"bold"}>
