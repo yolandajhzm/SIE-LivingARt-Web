@@ -46,24 +46,12 @@ const dummyData = [
 function HomePage(props) {
     const navigate = useNavigate();
     const location = useLocation();
-    const { email } = location.state;
+    const { userId } = location.state;
     const [allData, setAllData] = useState([]); 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
-    const handleSignout = async () => {
-        // TODO: Send the sign out data to the backend
-        try {
-          const response = await callApi("http://localhost:6000/user/logout", "PUT", email);
-
-          if (response) {
-            navigate("/"); 
-          } else {
-            // Handle sign out error
-            console.error("Sign out failed");
-          }
-        } catch (error) {
-          console.error("Error during sign out", error);
-        }
+    const handleSignout = () => {
+        navigate("/"); 
     };
 
     // const fetchFurniture = async () => {
@@ -102,7 +90,7 @@ function HomePage(props) {
                             <MenuItem onClick={handleSignout}>Sign Out</MenuItem>
                         </MenuList>
                     </Menu>
-                    <UploadModal isOpen={isOpen} onClose={onClose} onOpen={onOpen} />
+                    <UploadModal isOpen={isOpen} onClose={onClose} onOpen={onOpen} vendorId={userId} />
                     <Button  pl='5' pt='3' variant='link' onClick={onOpen} leftIcon={<AiOutlineUpload />} colorScheme="darkgray">Upload</Button>
                 </Flex>
             </Flex>
@@ -126,7 +114,7 @@ function HomePage(props) {
                     flexDirection="column"
                     alignItems="center"
                     justifyContent="center"
-                    onClick={() => navigate(`/furniture/${furniture.id}`, { state: { email: email } })}
+                    onClick={() => navigate(`/furniture/${furniture.id}`, { state: { userId } })}
                     >
                     <Image src={furniture.imageSrc} alt={furniture.name} height="230px" borderRadius={"10"}/>
                     <Text mt={2}  fontFamily={"Avenir"} fontWeight={"bold"}>

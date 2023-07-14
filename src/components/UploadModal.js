@@ -1,42 +1,93 @@
 import { useState } from "react";
 import { Button, Modal, ModalOverlay, Textarea, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
 
-const UploadModal = ({ isOpen, onClose, onOpen }) => {
+import { callApi } from "./API";
+import axios from 'axios';
+import { set } from "react-hook-form";
+
+const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
   const [description, setDescription] = useState("");
-  const [furnitureType, setFurnitureType] = useState("");
+  const [name, setName] = useState("");
+  const [furnitureType, setFurnitureType] = useState("chair");
   const [selectedModel, setSelectedModel] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  const handleUpload = async () => {
-    // try {
-    //     const formData = new FormData();
-    //     formData.append("description", description);
-    //     formData.append("furnitureType", furnitureType);
-    //     formData.append("model", selectedModel);
-    //     formData.append("image", selectedImage);
-        
-    //     const response = await callApi("url", "POST", formData);
+  // const handleUpload = async (data) => {
+  //   // upload: absolute path
+  //   try {
+  //       const formData = new FormData();
+  //       formData.append("name", data.name);
+  //       formData.append("type", data.furnitureType);
+  //       formData.append("imagePath", data.selectedImage);
+  //       formData.append("model", data.selectedModel);
+  //       formData.append("description", data.description);
+  //       formData.append("vendorID", 1);  //TODO: change to actual vendor id
 
-    //     if (response.success) {
-    //         //TODO: Handle success
-    //         // reload the page
-    //         console.log("Upload successful");
-    //     } else {
-    //         // Handle failure
-    //         console.error("Upload failed");
-    //     }
-    // } catch (error) {
-    //   // Handle error
-    //   console.error("Error during upload", error);
-    // }
+  //       console.log(formData);
+        
+  //       // const response = await callApi("url", "POST", formData);
+
+  //       // if (response.success) {
+  //       //     //TODO: Handle success
+  //       //     // reload the page
+  //       //     console.log("Upload successful");
+  //       // } else {
+  //       //     // Handle failure
+  //       //     console.error("Upload failed");
+  //       // }
+  //   } catch (error) {
+  //     // Handle error
+  //     console.error("Error during upload", error);
+  //   }
+  //   // Reset the state and close the modal
+  //   setDescription("");
+  //   setFurnitureType("");
+  //   setSelectedModel(null);
+  //   setSelectedImage(null);
+  //   onClose();
+  // };
+
+  const handleUpload = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("name", name);
+      formData.append("type", furnitureType);
+      formData.append("image-file", selectedImage);
+      formData.append("three-model", selectedModel);
+      formData.append("description", description);
+      formData.append("vendorId", vendorId); // TODO: change to actual vendor id
+  
+      console.log([...formData]); // Log the form data for debugging
+
+     
+      const response = await axios.post("http://localhost:88/api/furniture/info/upload", formData, {
+      headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
+      console.log(response);
+      if (response.data.code === 0) {
+        console.log("Upload successful");
+      } else {
+        alert(response.data.msg);
+        console.error("Upload failed");
+      }
+    } catch (error) {
+      // Handle error
+      console.error("Error during upload", error);
+    }
+  
     // Reset the state and close the modal
+    setName("");
     setDescription("");
     setFurnitureType("");
     setSelectedModel(null);
     setSelectedImage(null);
     onClose();
   };
-
+  
+  
   const handleModelChange = (event) => {
     const modelFile = event.target.files[0];
     setSelectedModel(modelFile);
@@ -47,11 +98,16 @@ const UploadModal = ({ isOpen, onClose, onOpen }) => {
     setSelectedImage(imageFile);
   };
 
+  const handleNameChange = (event) => {
+    setName(event.target.value);
+  };
+
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
   };
 
   const handleTypeChange = (event) => {
+    console.log("type change: " + event.target.value);
     setFurnitureType(event.target.value)
   };
 
@@ -67,9 +123,17 @@ const UploadModal = ({ isOpen, onClose, onOpen }) => {
         <ModalHeader>Upload New Furniture</ModalHeader>
         <ModalCloseButton />
         <ModalBody>
-          <FormControl>
+        <FormControl>
+            <FormLabel>Furniture Name</FormLabel>
+            <Textarea
+              value={name}
+              onChange={handleNameChange}
+              rows={1}
+            />
+          </FormControl>
+          <FormControl mt={4}>
             <FormLabel>Select 3D Model</FormLabel>
-            <Input type="file" accept=".obj,.glb" onChange={handleModelChange} borderWidth={0} />
+            <Input type="file" accept=".zip" onChange={handleModelChange} borderWidth={0} />
           </FormControl>
           <FormControl mt={4}>
             <FormLabel>Select Image</FormLabel>
@@ -86,8 +150,8 @@ const UploadModal = ({ isOpen, onClose, onOpen }) => {
           <FormControl mt={4}>
             <FormLabel>Furniture Type</FormLabel>
             <Select value={furnitureType} onChange={handleTypeChange}>
-              <option value="1">Chair</option>
-              <option value="2">Table</option>
+              <option value="chair">Chair</option>
+              <option value="table">Table</option>
               {/* Add more options here */}
             </Select>
           </FormControl>

@@ -1,19 +1,24 @@
-export const callApi = async (url, method = 'GET', data = null) => {
+export const callApi = async (url, method = 'GET', data = null, contentType = 'application/json') => {
     try {
       const response = await fetch(url, {
         method: method,
         headers: {
-          'Content-Type': 'application/json',
+          'Content-Type': contentType,
+         
         },
-        body: data ? JSON.stringify(data) : null,
+        body: contentType === 'application/json' ? JSON.stringify(data) : data,
       });
+
+      const responseData = await response.json();
+      return responseData;
   
-      if (response.ok) {
-        const responseData = await response.json();
-        return responseData;
-      } else {
-        throw new Error('API request failed');
-      }
+      //successs code = 0, error code = 1
+      // move this to each modal, alert need responseData.msg
+      // if (responseData.code === 0) { 
+      //   return responseData.data;
+      // } else {
+      //   throw new Error('API request failed ' + responseData.msg);
+      // }
     } catch (error) {
       throw new Error('API request failed');
     }

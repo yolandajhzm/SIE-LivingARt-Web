@@ -24,17 +24,29 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     setPassword(data.password);
     // TODO: Send the login data to the backend
     try {
-      const response = await callApi("http://localhost:6000/user/login", "PUT", {
+      const response = await callApi("http://localhost:88/api/user/info/login", "PUT", {
         email: data.email,
         password: data.password,
       });
 
       reset();
-      if (response) {
-        onClose();
-        navigate("/home", { state: { email: data.email } }); 
+
+      //successs code = 0, error code = 1
+      if (response.code === 0) { 
+        console.log("response: ", response);
+        const userId = response.data.id; 
+        const userType = response.data['user-type'];
+        console.log("response.data.user-type: ", response.data['user-type']);
+        console.log("userType: ", userType);
+        if(userType === 0) {
+          alert("This is a customer account. Please log in with a vendor account.");
+          onClose();
+        } else {
+          onClose();
+          navigate("/home", { state: { userId } });
+      }
       } else {
-        // Handle login error
+        alert(response.msg);
         console.error("Login failed");
       }
     } catch (error) {
@@ -48,18 +60,19 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     setUserType(data.userType);
     // TODO: Send the sign up data to the backend
     try {
-      const response = await callApi("http://localhost:6000/user/register", "POST", {
+      const response = await callApi("http://localhost:88/api/user/info/save", "POST", {
         email: data.email,
         password: data.password,
         type: data.userType,
       });
-
-      if (response) {
+      //successs code = 0, error code = 1
+      if (response.code === 0) { 
         setShowRegisterModal(false);
         reset(); 
         onOpen();
       } else {
-        alert("Sign up failed");
+        alert(response.msg);
+        console.error("Sign up failed");
       }
     } catch (error) {
       console.error("Error during sign up", error);
