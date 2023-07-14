@@ -12,41 +12,6 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
   const [selectedModel, setSelectedModel] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
 
-  // const handleUpload = async (data) => {
-  //   // upload: absolute path
-  //   try {
-  //       const formData = new FormData();
-  //       formData.append("name", data.name);
-  //       formData.append("type", data.furnitureType);
-  //       formData.append("imagePath", data.selectedImage);
-  //       formData.append("model", data.selectedModel);
-  //       formData.append("description", data.description);
-  //       formData.append("vendorID", 1);  //TODO: change to actual vendor id
-
-  //       console.log(formData);
-        
-  //       // const response = await callApi("url", "POST", formData);
-
-  //       // if (response.success) {
-  //       //     //TODO: Handle success
-  //       //     // reload the page
-  //       //     console.log("Upload successful");
-  //       // } else {
-  //       //     // Handle failure
-  //       //     console.error("Upload failed");
-  //       // }
-  //   } catch (error) {
-  //     // Handle error
-  //     console.error("Error during upload", error);
-  //   }
-  //   // Reset the state and close the modal
-  //   setDescription("");
-  //   setFurnitureType("");
-  //   setSelectedModel(null);
-  //   setSelectedImage(null);
-  //   onClose();
-  // };
-
   const handleUpload = async() => {
     try {
       const formData = new FormData();
@@ -83,7 +48,6 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
     // Reset the state and close the modal
     setName("");
     setDescription("");
-    setFurnitureType("");
     setSelectedModel(null);
     setSelectedImage(null);
     onClose();
@@ -154,6 +118,8 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
             <Select value={furnitureType} onChange={handleTypeChange}>
               <option value="chair">Chair</option>
               <option value="table">Table</option>
+              <option value="sofa">Sofa</option>
+              <option value="lamp">Lamp</option>
               {/* Add more options here */}
             </Select>
           </FormControl>

@@ -121,7 +121,7 @@ function HomePage(props) {
                 templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} // Responsive grid layout
                 gap={4}
                 >
-                {dummyData.map((furniture) => (
+                {allData.map((furniture) => (
                     <Box
                     key={furniture.id}
                     p={2}
