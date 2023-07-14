@@ -9,7 +9,10 @@ export const callApi = async (url, method = 'GET', data = null, contentType = 'a
         body: contentType === 'application/json' ? JSON.stringify(data) : data,
       });
 
+      console.log("response: ", response);
+      
       const responseData = await response.json();
+      console.log("response.json: ", responseData);
       return responseData;
   
       //successs code = 0, error code = 1

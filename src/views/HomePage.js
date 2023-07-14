@@ -46,7 +46,8 @@ const dummyData = [
 function HomePage(props) {
     const navigate = useNavigate();
     const location = useLocation();
-    const { userId } = location.state;
+    const userId  = location.state.userId;
+    const email  = location.state.email;
     const [allData, setAllData] = useState([]); 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -54,18 +55,32 @@ function HomePage(props) {
         navigate("/"); 
     };
 
+    // useEffect(() => {
     // const fetchFurniture = async () => {
     //     try {
-    //       const response = await callApi("url", email);
-    //       setAllData(response.data);
-    //     } catch (error) {
-    //       console.error(error);
+    //       const response = await axios.post("http://localhost:88/api/furniture/info/user",  {
+    //       headers: {
+    //         'Content-Type': 'multipart/form-data',
+    //       },
+    //     });
+
+    //     console.log(response);
+    //     if (response.data.code === 0) {
+    //       setAllData(response.data.data);
+    //       console.log("Get successful");
+    //     } else {
+    //       alert(response.data.msg);
+    //       console.error("Get failed");
     //     }
+    //   } catch (error) {
+    //     // Handle error
+    //     console.error("Error during get", error);
+    //   }
     // };
-    
-    // useEffect(() => {
-    //   fetchFurniture(); 
+    // fetchFurniture();
     // }, []);
+    
+    
 
     return (
         <Flex 
@@ -101,7 +116,7 @@ function HomePage(props) {
                 templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} // Responsive grid layout
                 gap={4}
                 >
-                {dummyData.map((furniture) => (
+                {allData.map((furniture) => (
                     <Box
                     key={furniture.id}
                     p={2}
@@ -116,7 +131,7 @@ function HomePage(props) {
                     justifyContent="center"
                     onClick={() => navigate(`/furniture/${furniture.id}`, { state: { userId } })}
                     >
-                    <Image src={furniture.imageSrc} alt={furniture.name} height="230px" borderRadius={"10"}/>
+                    <Image src={furniture.imageSource} alt={furniture.name} height="230px" borderRadius={"10"}/>
                     <Text mt={2}  fontFamily={"Avenir"} fontWeight={"bold"}>
                         {furniture.name}
                     </Text>

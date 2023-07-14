@@ -33,17 +33,14 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
 
       //successs code = 0, error code = 1
       if (response.code === 0) { 
-        console.log("response: ", response);
         const userId = response.data.id; 
         const userType = response.data['user-type'];
-        console.log("response.data.user-type: ", response.data['user-type']);
-        console.log("userType: ", userType);
         if(userType === 0) {
           alert("This is a customer account. Please log in with a vendor account.");
           onClose();
         } else {
           onClose();
-          navigate("/home", { state: { userId } });
+          navigate("/home", { state: { userId, email: data.email } });
       }
       } else {
         alert(response.msg);
@@ -65,6 +62,7 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
         password: data.password,
         type: data.userType,
       });
+      console.log("response: ", response);
       //successs code = 0, error code = 1
       if (response.code === 0) { 
         setShowRegisterModal(false);
