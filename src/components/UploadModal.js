@@ -47,8 +47,8 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
   //   onClose();
   // };
 
-  const handleUpload = async () => {
-    try {
+  const handleUpload = () => {
+    // try {
       const formData = new FormData();
       formData.append("name", name);
       formData.append("type", furnitureType);
@@ -59,24 +59,25 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
   
       console.log([...formData]); // Log the form data for debugging
 
+      window.location.reload();
      
-      const response = await axios.post("http://localhost:88/api/furniture/info/upload", formData, {
-      headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+    //   const response = await axios.post("http://localhost:88/api/furniture/info/upload", formData, {
+    //   headers: {
+    //       'Content-Type': 'multipart/form-data',
+    //     },
+    //   });
 
-      console.log(response);
-      if (response.data.code === 0) {
-        console.log("Upload successful");
-      } else {
-        alert(response.data.msg);
-        console.error("Upload failed");
-      }
-    } catch (error) {
-      // Handle error
-      console.error("Error during upload", error);
-    }
+    //   console.log(response);
+    //   if (response.data.code === 0) {
+    //     console.log("Upload successful");
+    //   } else {
+    //     alert(response.data.msg);
+    //     console.error("Upload failed");
+    //   }
+    // } catch (error) {
+    //   // Handle error
+    //   console.error("Error during upload", error);
+    // }
   
     // Reset the state and close the modal
     setName("");

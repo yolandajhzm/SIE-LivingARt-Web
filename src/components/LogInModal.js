@@ -40,6 +40,8 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
           onClose();
         } else {
           onClose();
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("email", data.email);
           navigate("/home", { state: { userId, email: data.email } });
       }
       } else {

@@ -4,6 +4,7 @@ import { AiOutlineUser, AiOutlineUpload } from 'react-icons/ai';
 import { Link } from 'react-router-dom';
 import { Divider } from '@chakra-ui/react'
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
 
 import UploadModal from "../components/UploadModal";
 import { callApi } from "../components/API";
@@ -46,39 +47,43 @@ const dummyData = [
 function HomePage(props) {
     const navigate = useNavigate();
     const location = useLocation();
-    const userId  = location.state.userId;
-    const email  = location.state.email;
+    const userId = location.state.userId || localStorage.getItem("userId");
+    const email = location.state.email || localStorage.getItem("email");
+    console.log("email: ", email);
     const [allData, setAllData] = useState([]); 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
     const handleSignout = () => {
+        localStorage.removeItem("userId"); 
+        localStorage.removeItem("email"); 
         navigate("/"); 
     };
 
-    // useEffect(() => {
-    // const fetchFurniture = async () => {
-    //     try {
-    //       const response = await axios.post("http://localhost:88/api/furniture/info/user",  {
-    //       headers: {
-    //         'Content-Type': 'multipart/form-data',
-    //       },
-    //     });
+    useEffect(() => {
+    const fetchFurniture = async () => {
+        try {
+          const response = await axios.post("http://localhost:88/api/furniture/info/user", { email } 
+        ,{
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-    //     console.log(response);
-    //     if (response.data.code === 0) {
-    //       setAllData(response.data.data);
-    //       console.log("Get successful");
-    //     } else {
-    //       alert(response.data.msg);
-    //       console.error("Get failed");
-    //     }
-    //   } catch (error) {
-    //     // Handle error
-    //     console.error("Error during get", error);
-    //   }
-    // };
-    // fetchFurniture();
-    // }, []);
+        console.log(response);
+        if (response.data.code === 0) {
+          setAllData(response.data.data);
+          console.log("Get successful");
+        } else {
+          alert(response.data.msg);
+          console.error("Get failed");
+        }
+      } catch (error) {
+        // Handle error
+        console.error("Error during get", error);
+      }
+    };
+    fetchFurniture();
+    }, []);
     
     
 
