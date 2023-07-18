@@ -1,14 +1,47 @@
 import { useState } from "react";
 import { Button, Modal, ModalOverlay, Textarea, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
-
-import { callApi } from "./API";
+import { useNavigate } from "react-router-dom";
 import axios from 'axios';
 import { set } from "react-hook-form";
 
+import { callApi } from "./API";
+
 const EditModal = ({ isOpen, onClose, onOpen, vendorId, furniture }) => {
+  const navigate = useNavigate();
   const [description, setDescription] = useState(furniture.description);
   const [name, setName] = useState(furniture.name);
   const [furnitureType, setFurnitureType] = useState(furniture.type);
+
+  const handleDelete = async() => {
+    try {
+      const formData = new FormData();
+      formData.append("itemId", furniture.id);
+      formData.append("vendorId", vendorId); 
+  
+      console.log([...formData]); // Log the form data for debugging
+
+      const response = await axios.post("url", formData, {
+      headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+
+      console.log(response);
+      if (response.data.code === 0) {
+        console.log("Delete successful");
+        navigate("/home");
+      } else {
+        alert(response.data.msg);
+        console.error("Delete failed");
+      }
+    } catch (error) {
+      // Handle error
+      console.error("Error during delete", error);
+    }
+  
+    // Reset the state and close the modal
+    onClose();
+  };
 
   const handleEdit = async() => {
     try {
@@ -37,7 +70,7 @@ const EditModal = ({ isOpen, onClose, onOpen, vendorId, furniture }) => {
       }
     } catch (error) {
       // Handle error
-      console.error("Error during upload", error);
+      console.error("Error during edit", error);
     }
   
     // Reset the state and close the modal
@@ -95,6 +128,9 @@ const EditModal = ({ isOpen, onClose, onOpen, vendorId, furniture }) => {
           </FormControl>
         </ModalBody>
         <ModalFooter>
+          <Button bgColor='#545454' color='white' mr={3} onClick={handleDelete}>
+            Delete
+          </Button>
           <Button bgColor='#272727' color='white' mr={3} onClick={handleEdit}>
             Apply
           </Button>
