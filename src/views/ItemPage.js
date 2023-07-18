@@ -1,9 +1,10 @@
-import { Flex, Box, Spacer, Image, Button, Text, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
-import { AiOutlineUser } from 'react-icons/ai';
+import { Flex, Box, Spacer, useDisclosure, Image, Button, Text, Menu, MenuButton, MenuList, MenuItem } from "@chakra-ui/react";
+import { AiOutlineUser, AiOutlineEdit } from 'react-icons/ai';
 import { Divider } from '@chakra-ui/react'
 import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
+import EditModal from "../components/EditModal";
 import { callApi } from "../components/API";
 
 const dummyData = 
@@ -18,7 +19,9 @@ function ItemPage(props) {
     const navigate = useNavigate();
     const location = useLocation();
     const itemId = location.pathname.split("/")[2]; // Get the id from the url
+    const userId = localStorage.getItem("userId");
     const { furniture } = location.state;
+    const { isOpen, onOpen, onClose } = useDisclosure();
     // const [item, setItem] = useState(null); 
 
     const handleSignout = async () => {
@@ -48,6 +51,8 @@ function ItemPage(props) {
                             <MenuItem onClick={handleSignout}>Sign Out</MenuItem>
                         </MenuList>
                     </Menu>
+                    <EditModal isOpen={isOpen} onClose={onClose} onOpen={onOpen} vendorId={userId} furniture={furniture}/>
+                    <Button  pl='5' pt='3' variant='link' onClick={onOpen} leftIcon={<AiOutlineEdit />} colorScheme="darkgray">Edit</Button>
                 </Flex>
             </Flex>
             <Divider />

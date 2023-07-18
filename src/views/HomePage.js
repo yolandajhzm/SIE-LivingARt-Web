@@ -17,30 +17,35 @@ const dummyData = [
         name: "Chair1",
         imageSource: "../assets/chair.png",
         description: "This is Chair1.",
+        type: "chair"
     },
     {
         id: 2,
         name: "Table1",
         imageSource: "../assets/table.png",
         description: "This is Table1.",
+        type: "table"
     },
     {
         id: 3,
         name: "Chair2",
         imageSource: "../assets/chair.png",
         description: "This is Chair2.",
+        type: "chair"
     },
     {
         id: 4,
         name: "Table2",
         imageSource: "../assets/table.png",
         description: "This is Table2.",
+        type: "table"
     },
     {
         id: 5,
         name: "Sofa1",
         imageSource: "../assets/sofa.png",
         description: "This is Sofa1.",
+        type: "sofa"
     },
   ];
 
@@ -59,31 +64,31 @@ function HomePage(props) {
         navigate("/"); 
     };
 
-    useEffect(() => {
-    const fetchFurniture = async () => {
-        try {
-          const response = await axios.post("http://localhost:88/api/furniture/info/user", { email } 
-        ,{
-          headers: {
-            'Content-Type': 'application/json',
-          },
-        });
+    // useEffect(() => {
+    // const fetchFurniture = async () => {
+    //     try {
+    //       const response = await axios.post("http://localhost:88/api/furniture/info/user", { email } 
+    //     ,{
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //       },
+    //     });
 
-        console.log(response);
-        if (response.data.code === 0) {
-          setAllData(response.data.data);
-          console.log("Get successful");
-        } else {
-          alert(response.data.msg);
-          console.error("Get failed");
-        }
-      } catch (error) {
-        // Handle error
-        console.error("Error during get", error);
-      }
-    };
-    fetchFurniture();
-    }, []);
+    //     console.log(response);
+    //     if (response.data.code === 0) {
+    //       setAllData(response.data.data);
+    //       console.log("Get successful");
+    //     } else {
+    //       alert(response.data.msg);
+    //       console.error("Get failed");
+    //     }
+    //   } catch (error) {
+    //     // Handle error
+    //     console.error("Error during get", error);
+    //   }
+    // };
+    // fetchFurniture();
+    // }, []);
     
     
 
@@ -121,7 +126,7 @@ function HomePage(props) {
                 templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} // Responsive grid layout
                 gap={4}
                 >
-                {allData.map((furniture) => (
+                {dummyData.map((furniture) => (
                     <Box
                     key={furniture.id}
                     p={2}
