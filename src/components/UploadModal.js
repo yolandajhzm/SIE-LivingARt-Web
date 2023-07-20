@@ -26,7 +26,7 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
 
      
      
-      const response = await axios.post("http://localhost:88/api/furniture/info/upload", formData, {
+      const response = await axios.post("https://5a45-2601-647-4b80-78a0-c065-8375-c08-9e97.ngrok-free.app/api/furniture/info/upload", formData, {
       headers: {
           'Content-Type': 'multipart/form-data',
         },
