@@ -4,6 +4,7 @@ import { Button, Modal, ModalOverlay, Textarea, ModalContent, ModalHeader, Modal
 import { callApi } from "./API";
 import axios from 'axios';
 import { set } from "react-hook-form";
+import URL from "./URL";
 
 const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
   const [description, setDescription] = useState("");
@@ -26,7 +27,7 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
 
      
      
-      const response = await axios.post("http://localhost:88/api/furniture/info/upload", formData, {
+      const response = await axios.post(URL.UPLOAD_FURNITURE, formData, {
       headers: {
           'Content-Type': 'multipart/form-data',
         },

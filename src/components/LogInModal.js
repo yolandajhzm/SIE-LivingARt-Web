@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 
 import { callApi } from "./API";
+import URL from "./URL";
 
 const LogInModal = ({ isOpen, onClose, onOpen }) => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     setPassword(data.password);
     // TODO: Send the login data to the backend
     // try {
-    //   const response = await callApi("http://localhost:88/api/user/info/login", "PUT", {
+    //   const response = await callApi(URL.LOGIN_USER, "PUT", {
     //     email: data.email,
     //     password: data.password,
     //   });
@@ -63,7 +64,7 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     setUserType(data.userType);
     // TODO: Send the sign up data to the backend
     try {
-      const response = await callApi("http://localhost:88/api/user/info/save", "POST", {
+      const response = await callApi(URL.REGISTER_USER, "POST", {
         email: data.email,
         password: data.password,
         type: data.userType,

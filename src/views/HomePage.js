@@ -8,6 +8,7 @@ import axios from "axios";
 
 import UploadModal from "../components/UploadModal";
 import { callApi } from "../components/API";
+import URL from "../components/URL";
 
 // TODO: Pagination
 
@@ -67,7 +68,7 @@ function HomePage(props) {
     // useEffect(() => {
     // const fetchFurniture = async () => {
     //     try {
-    //       const response = await axios.post("http://localhost:88/api/furniture/info/user", { email } 
+    //       const response = await axios.post(URL.GET_USER_FURNITURE, { email } 
     //     ,{
     //       headers: {
     //         'Content-Type': 'application/json',
