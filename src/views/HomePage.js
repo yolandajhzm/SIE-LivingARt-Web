@@ -62,7 +62,7 @@ function HomePage(props) {
     useEffect(() => {
     const fetchFurniture = async () => {
         try {
-          const response = await axios.post("https://3f21-2601-647-5f00-ace0-25ad-d4f6-d978-b796.ngrok-free.app/api/furniture/info/user", { email } 
+          const response = await axios.post("http://localhost:88/api/furniture/info/user", { email } 
         ,{
           headers: {
             'Content-Type': 'application/json',

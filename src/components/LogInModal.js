@@ -24,7 +24,7 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     setPassword(data.password);
     // TODO: Send the login data to the backend
     try {
-      const response = await callApi("https://3f21-2601-647-5f00-ace0-25ad-d4f6-d978-b796.ngrok-free.app/api/user/info/login", "PUT", {
+      const response = await callApi("http://localhost:88/api/user/info/login", "PUT", {
         email: data.email,
         password: data.password,
       });
@@ -59,7 +59,7 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     setUserType(data.userType);
     // TODO: Send the sign up data to the backend
     try {
-      const response = await callApi("https://3f21-2601-647-5f00-ace0-25ad-d4f6-d978-b796.ngrok-free.app/api/user/info/save", "POST", {
+      const response = await callApi("http://localhost:88/api/user/info/save", "POST", {
         email: data.email,
         password: data.password,
         type: data.userType,
