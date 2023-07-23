@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Button, Modal, ModalOverlay, Textarea, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
 
-import { callApi } from "./API";
 import axios from 'axios';
-import { set } from "react-hook-form";
 import URL from "./URL";
 
 const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {

@@ -5,7 +5,6 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useState, useEffect } from "react";
 
 import EditModal from "../components/EditModal";
-import { callApi } from "../components/API";
 
 const dummyData = 
     {

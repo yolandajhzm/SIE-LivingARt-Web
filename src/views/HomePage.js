@@ -65,31 +65,31 @@ function HomePage(props) {
         navigate("/"); 
     };
 
-    // useEffect(() => {
-    // const fetchFurniture = async () => {
-    //     try {
-    //       const response = await axios.post(URL.GET_USER_FURNITURE, { email } 
-    //     ,{
-    //       headers: {
-    //         'Content-Type': 'application/json',
-    //       },
-    //     });
+    useEffect(() => {
+    const fetchFurniture = async () => {
+        try {
+          const response = await axios.post(URL.GET_USER_FURNITURE, { email } 
+        ,{
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-    //     console.log(response);
-    //     if (response.data.code === 0) {
-    //       setAllData(response.data.data);
-    //       console.log("Get successful");
-    //     } else {
-    //       alert(response.data.msg);
-    //       console.error("Get failed");
-    //     }
-    //   } catch (error) {
-    //     // Handle error
-    //     console.error("Error during get", error);
-    //   }
-    // };
-    // fetchFurniture();
-    // }, []);
+        console.log(response);
+        if (response.data.code === 0) {
+          setAllData(response.data.data);
+          console.log("Get successful");
+        } else {
+          alert(response.data.msg);
+          console.error("Get failed");
+        }
+      } catch (error) {
+        // Handle error
+        console.error("Error during get", error);
+      }
+    };
+    fetchFurniture();
+    }, []);
     
     
 
@@ -127,7 +127,7 @@ function HomePage(props) {
                 templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)", "repeat(3, 1fr)"]} // Responsive grid layout
                 gap={4}
                 >
-                {dummyData.map((furniture) => (
+                {allData.map((furniture) => (
                     <Box
                     key={furniture.id}
                     p={2}

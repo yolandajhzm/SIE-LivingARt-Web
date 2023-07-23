@@ -6,6 +6,8 @@ import { set } from "react-hook-form";
 
 import { callApi } from "./API";
 
+// TODO: Connect to backend
+
 const EditModal = ({ isOpen, onClose, onOpen, vendorId, furniture }) => {
   const navigate = useNavigate();
   const [description, setDescription] = useState(furniture.description);

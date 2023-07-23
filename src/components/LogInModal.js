@@ -24,38 +24,39 @@ const LogInModal = ({ isOpen, onClose, onOpen }) => {
     setEmail(data.email);
     setPassword(data.password);
     // TODO: Send the login data to the backend
-    // try {
-    //   const response = await callApi(URL.LOGIN_USER, "PUT", {
-    //     email: data.email,
-    //     password: data.password,
-    //   });
+    try {
+      const response = await callApi(URL.LOGIN_USER, "PUT", {
+        email: data.email,
+        password: data.password,
+      });
 
-    //   reset();
+      reset();
 
-    //   //successs code = 0, error code = 1
-    //   if (response.code === 0) { 
-    //     const userId = response.data.id; 
-    //     const userType = response.data['user-type'];
-    //     if(userType === 0) {
-    //       alert("This is a customer account. Please log in with a vendor account.");
-    //       onClose();
-    //     } else {
-    //       onClose();
-    //       localStorage.setItem("userId", userId);
-    //       localStorage.setItem("email", data.email);
-    //       navigate("/home", { state: { userId, email: data.email } });
-    //   }
-    //   } else {
-    //     alert(response.msg);
-    //     console.error("Login failed");
-    //   }
-    // } catch (error) {
-    //   console.error("Error during login", error);
-    // }
-    const userId = 1;
-    localStorage.setItem("userId", userId);
-    localStorage.setItem("email", data.email);
-    navigate("/home", { state: { userId, email: data.email } });
+      //successs code = 0, error code = 1
+      if (response.code === 0) { 
+        const userId = response.data.id; 
+        const userType = response.data['user-type'];
+        if(userType === 0) {
+          alert("This is a customer account. Please log in with a vendor account.");
+          onClose();
+        } else {
+          onClose();
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("email", data.email);
+          navigate("/home", { state: { userId, email: data.email } });
+      }
+      } else {
+        alert(response.msg);
+        console.error("Login failed");
+      }
+    } catch (error) {
+      console.error("Error during login", error);
+    }
+    // To test w/o backend
+    // const userId = 1;
+    // localStorage.setItem("userId", userId);
+    // localStorage.setItem("email", data.email);
+    // navigate("/home", { state: { userId, email: data.email } });
   };
 
   const onSignUp = async (data) => {
