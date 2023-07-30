@@ -53,8 +53,8 @@ const dummyData = [
 function HomePage(props) {
     const navigate = useNavigate();
     const location = useLocation();
-    const userId = location.state.userId || localStorage.getItem("userId");
-    const email = location.state.email || localStorage.getItem("email");
+    const userId = localStorage.getItem("userId") || location.state.userId;
+    const email = localStorage.getItem("email") || location.state.email;
     console.log("email: ", email);
     const [allData, setAllData] = useState([]); 
     const { isOpen, onOpen, onClose } = useDisclosure();
@@ -89,7 +89,7 @@ function HomePage(props) {
       }
     };
     fetchFurniture();
-    }, []);
+}, []);
     
     
 

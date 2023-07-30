@@ -5,6 +5,7 @@ import axios from 'axios';
 import { set } from "react-hook-form";
 
 import { callApi } from "./API";
+import URL from "./URL";
 
 // TODO: Connect to backend
 
@@ -18,14 +19,16 @@ const EditModal = ({ isOpen, onClose, onOpen, vendorId, furniture }) => {
     try {
       const formData = new FormData();
       formData.append("itemId", furniture.id);
-      formData.append("vendorId", vendorId); 
-  
-      console.log([...formData]); // Log the form data for debugging
+      console.log('furniture.id: ', furniture.id);
 
-      const response = await axios.post("url", formData, {
-      headers: {
-          'Content-Type': 'application/json',
-        },
+      const idArray = [
+        furniture.id
+      ];
+
+      const response = await axios.delete(URL.DELETE_FURNITURE, { data: idArray }, {
+        headers: {
+            'Content-Type': 'application/json',
+          },
       });
 
       console.log(response);
@@ -56,7 +59,7 @@ const EditModal = ({ isOpen, onClose, onOpen, vendorId, furniture }) => {
   
       console.log([...formData]); // Log the form data for debugging
 
-      const response = await axios.post("url", formData, {
+      const response = await axios.post(URL.UPDATE_FURNITURE, formData, {
       headers: {
           'Content-Type': 'application/json',
         },
@@ -65,7 +68,7 @@ const EditModal = ({ isOpen, onClose, onOpen, vendorId, furniture }) => {
       console.log(response);
       if (response.data.code === 0) {
         console.log("Edit successful");
-        window.location.reload();
+        // window.location.reload();
       } else {
         alert(response.data.msg);
         console.error("Edit failed");
