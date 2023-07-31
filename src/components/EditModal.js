@@ -51,13 +51,13 @@ const EditModal = ({ isOpen, onClose, onOpen, vendorId, furniture }) => {
   const handleEdit = async() => {
     try {
       const formData = new FormData();
-      formData.append("itemId", furniture.id);
+      formData.append("id", furniture.id);
       formData.append("name", name);
       formData.append("type", furnitureType);
       formData.append("description", description);
       formData.append("vendorId", vendorId); 
   
-      console.log([...formData]); // Log the form data for debugging
+      console.log([...formData]); 
 
       const response = await axios.post(URL.UPDATE_FURNITURE, formData, {
       headers: {
@@ -68,7 +68,7 @@ const EditModal = ({ isOpen, onClose, onOpen, vendorId, furniture }) => {
       console.log(response);
       if (response.data.code === 0) {
         console.log("Edit successful");
-        // window.location.reload();
+        window.location.reload();
       } else {
         alert(response.data.msg);
         console.error("Edit failed");

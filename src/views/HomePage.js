@@ -12,50 +12,12 @@ import URL from "../components/URL";
 
 // TODO: Pagination
 
-const dummyData = [
-    {
-        id: 1,
-        name: "Chair1",
-        imageSource: "../assets/chair.png",
-        description: "This is Chair1.",
-        type: "chair"
-    },
-    {
-        id: 2,
-        name: "Table1",
-        imageSource: "../assets/table.png",
-        description: "This is Table1.",
-        type: "table"
-    },
-    {
-        id: 3,
-        name: "Chair2",
-        imageSource: "../assets/chair.png",
-        description: "This is Chair2.",
-        type: "chair"
-    },
-    {
-        id: 4,
-        name: "Table2",
-        imageSource: "../assets/table.png",
-        description: "This is Table2.",
-        type: "table"
-    },
-    {
-        id: 5,
-        name: "Sofa1",
-        imageSource: "../assets/sofa.png",
-        description: "This is Sofa1.",
-        type: "sofa"
-    },
-  ];
 
 function HomePage(props) {
     const navigate = useNavigate();
     const location = useLocation();
     const userId = localStorage.getItem("userId") || location.state.userId;
     const email = localStorage.getItem("email") || location.state.email;
-    console.log("email: ", email);
     const [allData, setAllData] = useState([]); 
     const { isOpen, onOpen, onClose } = useDisclosure();
 
