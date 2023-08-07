@@ -40,6 +40,7 @@ function HomePage(props) {
         console.log(response);
         if (response.data.code === 0) {
           setAllData(response.data.data);
+          console.log(response.data.data[1])
           console.log("Get successful");
         } else {
           alert(response.data.msg);

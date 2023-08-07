@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button, Modal, ModalOverlay, Textarea, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, FormControl, FormLabel, Input, Select } from "@chakra-ui/react";
+import { Button, Modal, ModalOverlay, Textarea, ModalContent, ModalHeader, ModalBody, ModalFooter, ModalCloseButton, FormControl, FormLabel, Input, Select, Grid } from "@chakra-ui/react";
 
 import axios from 'axios';
 import URL from "./URL";
@@ -10,6 +10,9 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
   const [furnitureType, setFurnitureType] = useState("chair");
   const [selectedModel, setSelectedModel] = useState(null);
   const [selectedImage, setSelectedImage] = useState(null);
+  const [height, setHeight] = useState("");
+  const [width, setWidth] = useState("");
+  const [length, setLength] = useState("");
 
   const handleUpload = async() => {
     try {
@@ -19,17 +22,19 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
       formData.append("image-file", selectedImage);
       formData.append("three-model", selectedModel);
       formData.append("description", description);
-      formData.append("vendorId", vendorId); // TODO: change to actual vendor id
+      formData.append("height", height);
+      formData.append("width", width);
+      formData.append("length", length);
+      formData.append("vendorId", vendorId); 
   
       console.log([...formData]); // Log the form data for debugging
-
      
-     
-      const response = await axios.post(URL.UPLOAD_FURNITURE, formData, {
-      headers: {
-          'Content-Type': 'multipart/form-data',
-        },
-      });
+      // const response = await axios.post(URL.UPLOAD_FURNITURE, {
+      // headers: {
+      //     'Content-Type': 'multipart/form-data',
+      //   },
+      // },  { data: formData });
+      const response = await axios.post(URL.UPLOAD_FURNITURE, formData);
 
       console.log(response);
       if (response.data.code === 0) {
@@ -45,14 +50,22 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
     }
   
     // Reset the state and close the modal
-    setName("");
-    setDescription("");
-    setSelectedModel(null);
-    setSelectedImage(null);
-    onClose();
+    
+    handleClose();
   };
   
-  
+  const handleHeightChange = (event) => {
+    setHeight(event.target.value);
+  };
+
+  const handleWidthChange = (event) => {
+    setWidth(event.target.value);
+  };
+
+  const handleLengthChange = (event) => {
+    setLength(event.target.value);
+  };
+
   const handleModelChange = (event) => {
     const modelFile = event.target.files[0];
     setSelectedModel(modelFile);
@@ -72,13 +85,31 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
   };
 
   const handleTypeChange = (event) => {
-    console.log("type change: " + event.target.value);
     setFurnitureType(event.target.value)
   };
 
   const handleClose = () => {
-    setDescription(""); 
+    setName("");
+    setDescription("");
+    setSelectedModel(null);
+    setSelectedImage(null);
+    setHeight("");
+    setWidth("");
+    setLength("");
     onClose(); 
+  };
+
+  // true: not all fields are filled
+  const areAllFieldsFilled = () => {
+    return (
+      name.trim() == "" ||
+      selectedModel == null ||
+      selectedImage == null ||
+      height.trim() == "" ||
+      width.trim() == "" ||
+      length.trim() == "" ||
+      description.trim() == ""
+    );
   };
 
   return (
@@ -104,6 +135,35 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
             <FormLabel>Select Image</FormLabel>
             <Input type="file" accept="image/*" onChange={handleImageChange} borderWidth={0} />
           </FormControl>
+          <Grid templateColumns="repeat(3, 1fr)" gap={4}>
+            <FormControl mt={4}>
+              <FormLabel>Height (cm)</FormLabel>
+              <Input
+                value={height}
+                onChange={handleHeightChange}
+                type="number"
+                step="0.01" 
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Width (cm)</FormLabel>
+              <Input
+                value={width}
+                onChange={handleWidthChange}
+                type="number"
+                step="0.01" 
+              />
+            </FormControl>
+            <FormControl mt={4}>
+              <FormLabel>Length (cm)</FormLabel>
+              <Input
+                value={length}
+                onChange={handleLengthChange}
+                type="number"
+                step="0.01" 
+              />
+            </FormControl>
+          </Grid>
           <FormControl mt={4}>
             <FormLabel>Description</FormLabel>
             <Textarea
@@ -124,7 +184,7 @@ const UploadModal = ({ isOpen, onClose, onOpen, vendorId }) => {
           </FormControl>
         </ModalBody>
         <ModalFooter>
-          <Button bgColor='#272727' color='white' mr={3} onClick={handleUpload}>
+          <Button bgColor='#272727' color='white' mr={3} onClick={handleUpload} disabled={areAllFieldsFilled}>
             Upload
           </Button>
           <Button variant="ghost" onClick={handleClose}>
